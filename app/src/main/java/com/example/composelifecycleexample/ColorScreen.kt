@@ -3,6 +3,7 @@ package com.example.composelifecycleexample
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -10,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlin.random.Random
 
@@ -19,7 +21,7 @@ fun ColorScreenStateHolder() {
         mutableStateListOf<Long>()
     }
 
-    Column {
+    Column(Modifier.fillMaxSize()) {
         Row {
             Button(onClick = { items.addToBottom() }) {
                 Text(text = "Add to bottom")
@@ -47,6 +49,10 @@ fun ColorScreen(items: List<Long>) {
     Column {
         items.forEach { id ->
             ColorRow(id = id)
+
+            /*   key(id) {
+                   ColorRow(id = id)
+               }*/
         }
     }
 }
@@ -63,6 +69,14 @@ fun ColorRow(id: Long) {
             .background(getRandomColor())
             .wrapContentSize()
     )
+}
+
+@Preview
+@Composable
+fun ColorScreenPreview() {
+    Surface(color = Color.White) {
+        ColorScreenStateHolder()
+    }
 }
 
 private fun SnapshotStateList<Long>.addToBottom() {
