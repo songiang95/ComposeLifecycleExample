@@ -1,6 +1,5 @@
 package com.example.composelifecycleexample
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -16,39 +15,37 @@ import kotlin.random.Random
 
 @Composable
 fun ColorScreenStateHolder() {
-    val numbers = remember {
+    val items = remember {
         mutableStateListOf<Long>()
     }
 
     Column {
         Row {
-            Button(onClick = { numbers.addToBottom() }) {
+            Button(onClick = { items.addToBottom() }) {
                 Text(text = "Add to bottom")
             }
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Button(onClick = { numbers.addToMiddle() }) {
+            Button(onClick = { items.addToMiddle() }) {
                 Text(text = "Add to middle")
             }
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Button(onClick = { numbers.addToTop() }) {
+            Button(onClick = { items.addToTop() }) {
                 Text(text = "Add to top")
             }
         }
-
         Spacer(modifier = Modifier.height(16.dp))
-
-        ColorScreen(numbers = numbers)
+        ColorScreen(items = items)
     }
 }
 
 @Composable
-fun ColorScreen(numbers: List<Long>) {
+fun ColorScreen(items: List<Long>) {
     Column {
-        numbers.forEach { id ->
+        items.forEach { id ->
             ColorRow(id = id)
         }
     }
