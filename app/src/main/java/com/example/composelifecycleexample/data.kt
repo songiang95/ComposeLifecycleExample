@@ -1,13 +1,12 @@
 package com.example.composelifecycleexample
 
-import androidx.compose.runtime.Stable
-
 //Stable
 data class Person1(
     val name: String = "Nguyen Van A",
     val age: Int = 18
 )
 
+//Not Stable
 data class Person2(
     val name: String = "Nguyen Van A",
     var age: Int = 18

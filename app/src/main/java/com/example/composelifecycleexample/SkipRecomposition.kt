@@ -4,10 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,7 +15,7 @@ import kotlin.random.Random
 @Composable
 fun SkippedScreenStateHolder() {
     val datas = remember {
-        mutableStateListOf<MyData1>()
+        mutableStateListOf<MyData2>()
     }
 
     LogCompositions(tag = "abba", msg = "SkippedScreenStateHolder")
@@ -49,7 +46,7 @@ fun SkippedScreenStateHolder() {
 }
 
 @Composable
-fun ColorScreen(items: List<MyData1>) {
+fun ColorScreen(items: List<MyData2>) {
     LogCompositions(tag = "abba", msg = "ColorScreen")
     Column {
         items.forEach { data ->
@@ -61,7 +58,7 @@ fun ColorScreen(items: List<MyData1>) {
 }
 
 @Composable
-fun ColorRow(data: MyData1) {
+fun ColorRow(data: MyData2) {
     LogCompositions(tag = "abba", msg = "ColorRow: ${data.id}")
     Text(
         text = data.id.toString(),
@@ -82,16 +79,16 @@ fun StablePreview() {
     SkippedScreenStateHolder()
 }
 
-private fun SnapshotStateList<MyData1>.addToBottom() {
-    this.add(MyData1())
+private fun SnapshotStateList<MyData2>.addToBottom() {
+    this.add(MyData2())
 }
 
-private fun SnapshotStateList<MyData1>.addToTop() {
-    this.add(0, MyData1())
+private fun SnapshotStateList<MyData2>.addToTop() {
+    this.add(0, MyData2())
 }
 
-private fun SnapshotStateList<MyData1>.addToMiddle() {
-    this.add(this.size / 2, MyData1())
+private fun SnapshotStateList<MyData2>.addToMiddle() {
+    this.add(this.size / 2, MyData2())
 }
 
 private fun getRandomColor(): Color {
