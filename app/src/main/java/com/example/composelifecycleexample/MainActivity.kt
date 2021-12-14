@@ -1,10 +1,10 @@
 package com.example.composelifecycleexample
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -21,22 +21,41 @@ import androidx.compose.ui.unit.dp
 import com.example.composelifecycleexample.ui.theme.ComposeLifecycleExampleTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeLifecycleExampleTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    Main()
+                    Main(viewModel)
                 }
             }
         }
     }
 }
 
+
+@Composable
+fun TestState(viewModel: MainViewModel) {
+    Button(onClick = {
+        viewModel.changeUrl("ABCCC")
+    }) {
+        TestView(url = viewModel.url)
+    }
+}
+
+@Composable
+fun TestView(url: String) {
+    Text(text = url)
+}
+
 private var screenId by mutableStateOf(ScreenID.Main)
 
 @Composable
-fun Main() {
+fun Main(viewModel: MainViewModel) {
+    LogCompositions(tag = "abba", msg = "Main")
     Column {
         BackHandler {
             screenId = ScreenID.Main
@@ -56,7 +75,7 @@ fun Main() {
             }
 
             ScreenID.Skipped -> {
-                SkippedScreenStateHolder()
+                SkippedScreenStateHolder(viewModel)
             }
         }
     }
@@ -96,6 +115,6 @@ enum class ScreenID {
 @Composable
 fun DefaultPreview() {
     ComposeLifecycleExampleTheme {
-        Main()
+        Main(viewModel = MainViewModel())
     }
 }
